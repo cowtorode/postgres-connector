@@ -1,3 +1,5 @@
+package io.github.cowtorode.postgres.example;
+
 import io.github.cowtorode.postgres.PostgresConnectorImpl;
 import io.github.cowtorode.postgres.api.PostgresConnector;
 
