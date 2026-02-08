@@ -4,9 +4,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public interface PostgresConnector {
-	void prepareStatement(String command, PreparedStatementWriter writer) throws SQLException;
+	boolean getAutoCommit() throws SQLException;
 
-	void query(PreparedStatement stmt, ResultSetReader reader) throws SQLException;
+	void setAutoCommit(boolean autoCommit) throws SQLException;
+
+	void commit() throws SQLException;
+
+	void rollback() throws SQLException;
+
+	void prepare(String statement, PreparedStatementWriter writer) throws SQLException;
+
+	void query(PreparedStatement statement, ResultSetReader reader) throws SQLException;
 
 	void close() throws SQLException;
 }

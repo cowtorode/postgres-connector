@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.cowtorode</groupId>
         <artifactId>postgresql</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>connector-example</artifactId>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>io.github.cowtorode</groupId>
             <artifactId>postgres-connector</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${parent.version}</version>
         </dependency>
 
         <dependency>

@@ -8,27 +8,48 @@ import java.sql.*;
 
 public class PostgresConnectorImpl implements PostgresConnector {
 	private final Connection connection;
+	private boolean lastAutoCommit;
 
     public PostgresConnectorImpl(String url, String username, String password) throws SQLException {
-		this.connection = DriverManager.getConnection(url, username, password);
+		connection = DriverManager.getConnection(url, username, password);
     }
 
 	@Override
-	public void prepareStatement(String command, PreparedStatementWriter writer) throws SQLException {
-		PreparedStatement stmt = connection.prepareStatement(command);
-
-		writer.write(stmt);
-
-		stmt.close();
+	public boolean getAutoCommit() throws SQLException {
+		return connection.getAutoCommit();
 	}
 
 	@Override
-	public void query(PreparedStatement stmt, ResultSetReader reader) throws SQLException {
-		ResultSet result = stmt.executeQuery();
+	public void setAutoCommit(boolean autoCommit) throws SQLException {
+		connection.setAutoCommit(autoCommit);
+	}
 
-		reader.read(result);
+	@Override
+	public void commit() throws SQLException {
+		connection.commit();
+	}
 
-		result.close();
+	@Override
+	public void rollback() throws SQLException {
+		connection.rollback();
+	}
+
+	@Override
+	public void prepare(String statement, PreparedStatementWriter writer) throws SQLException {
+		PreparedStatement preparedStatement = connection.prepareStatement(statement);
+
+		writer.write(preparedStatement);
+
+		preparedStatement.close();
+	}
+
+	@Override
+	public void query(PreparedStatement statement, ResultSetReader reader) throws SQLException {
+		ResultSet set = statement.executeQuery();
+
+		reader.read(set);
+
+		set.close();
 	}
 
 	@Override
